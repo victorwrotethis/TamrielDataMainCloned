@@ -16,7 +16,7 @@ since_release: bool = os.environ.get("SINCE_RELEASE", "False") == "True"
 adjusted_date_since: datetime = datetime.fromisoformat(os.environ.get("ADJUSTED_DATE_SINCE", "2025-05-01"))
 github_repository = os.environ.get("GITHUB_REPOSITORY", "TD-Addon/TamrielDataMain")
 dry_run: bool = os.environ.get("DRY_RUN", "TRUE") == "TRUE"
-branch: str = os.environ.get("GITHUB_REF_NAME", "main")
+action_branch: str = os.environ.get("GITHUB_REF_NAME", "main")
 release_dir = "new_release"
 logger = logging.getLogger("tamriel_data_patch_archiver")
 
@@ -128,7 +128,7 @@ if __name__ == "__main__":
 
     # Find the changed files
     logger.info(f"Retrieving changed files since {chosen_since_date}...")
-    retrieved_changed_files = get_changed_files(chosen_since_date, "main")
+    retrieved_changed_files = get_changed_files(chosen_since_date, action_branch)
 
     if num_changes := len(retrieved_changed_files):
         logger.info(f"Found {num_changes} changed files.")
